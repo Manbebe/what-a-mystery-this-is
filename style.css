@@ -1,9 +1,11 @@
-#animatedText1 {
-    font-size: 24px;
-    font-family: Arial, sans-serif;
-}
-
-#animatedText2 {
-    font-size: 50px;
-    font-family: Arial, sans-serif;
-}
+body {
+      display: flex;
+      font-family: sans-serif;
+      font-size: 35px;
+      background-color: black;
+      color: grey;
+      height: 100vh;
+      margin: 0;
+     justify-content: center; /* Center horizontally */
+     align-items: center;     /* Center vertically */
+     cursor: none;
