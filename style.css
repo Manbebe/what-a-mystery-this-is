@@ -12,6 +12,32 @@ body {
      transition: background-color 0.5s ease;
 }
 
+body.light-mode {
+  background-color: white;
+}
+
+body.dark-mode {
+  background-color: black;
+
+}
+
  #buttons {
-      display: ; /* Initially hide the buttons */
+     display:nne; /* Initially hide the buttons */
     }
+
+#ld_mode{
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  margin: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: white solid 1px;
+  border-radius: 5px;
+  background-color: black;
+  color: white;
+  transition: background-color 0.3s;
+}

@@ -16,13 +16,24 @@ const sentences = [
     let currentSentence = 0;
     let index = 0;
     let interval;
-    let sentence = true;
+    let currentColor = 'black';
     const buttonsDiv = document.getElementById('buttons');
     const textDiv = document.getElementById("text");
     const typeSound = document.getElementById("typeSound");
+    const lightDark = document.getElementById("ld_mode");
+
+    function changeBackgroundToBlack(){
+      if (currentColor === 'white') {
+        document.body.style.backgroundColor = 'black';
+        currentColor = 'black';
+      } else{
+        document.body.style.backgroundColor = 'white';
+        currentColor = 'white';
+      }
+    }
 
     function typeSentence() {
-      if (sentence & index < sentences[currentSentence].length) {
+      if (index < sentences[currentSentence].length) {
         textDiv.textContent += sentences[currentSentence][index];
         
         // Restart and play the typing sound
@@ -41,8 +52,7 @@ const sentences = [
       currentSentence = (currentSentence + 1) % sentences.length;
       interval = setInterval(typeSentence, 50);
        if (currentSentence === 11) {
-        sentence = false;
-          buttonsDiv.style.display = "block"; // Show buttons after 6 sentences
+          buttonsDiv.style.display = "block"; // Show buttons after 11 sentences
         }
     }
 
@@ -51,7 +61,14 @@ const sentences = [
     // Start the first sentence
     interval = setInterval(typeSentence, 50);
  
+window.addEventListener('DOMContentLoaded', () => {
+    const ambiance = document.getElementById('bg-ambi');
 
+    // Wait for user interaction to play music
+    document.body.addEventListener('click', () => {
+      ambiance.play();
+    }, { once: true }); // Only triggers on the first click
+  });
 
 ///      "This section of this project will be a message for those who have helped me thoughout the year",
 ///   "Whether it be my classmates or Mr Coop",
