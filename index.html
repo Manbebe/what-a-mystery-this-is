@@ -1,19 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Text Animation</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Text Animation</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body onclick="nextSentence()">
-  <audio id="bg-ambi" src="mixkit-wind-blowing-ambience-2658.wav" autoplay loop></audio>
+<body>
+  <audio id="bg-ambi" src="mixkit-wind-blowing-ambience-2658.wav" loop></audio>
+  
   <div id="text"></div>
+
+
   <div id="buttons">
     <button id="ld_mode" class="ld-button">Light/dark mode</button>
-    <button>Button 2</button>
+    <button id="button1">What time is it?</button>
+    <button id="button2">Who are you?</button>
+</div>
+
   </div>
-  <audio id="typeSound" src="voice_gaster_7.mp3" preload="auto"></audio>
+
+  <audio id="typeSound" src="text_regular.mp3" preload="auto"></audio>
   <script src="script.js"></script>
 </body>
 </html>

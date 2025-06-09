@@ -1,81 +1,113 @@
-const sentences = [
-      "Click text to proceed to next sentence",
-      "Hello...",
-      "Welcome to my final project",
-      "I think it pretty obvious that i used a bit of chat gpt for this but thats beside the point",
-      "This websites focus is an interactable little thing where there are many interactables...",
-      "That make me say different things and maybe do different things if my creator wants to idk",
-      "So please enjoy this little thing cuz even though it might be simple, its cool so yea :)",
-      "The buttons will now appear in 3",
-      "2",
-      "1",
-      "0"
-    ];
+const introSentences = [
+  "Click text to proceed to next sentence",
+  "Hello...",
+  "Welcome to my final project",
+  "I think it’s pretty obvious I used a bit of AI, but that’s beside the point.",
+  "This website focuses on being an interactable little thing...",
+  "So please enjoy this :)",
+  "The buttons will now appear in 3",
+  "2",
+  "1",
+  "0",
+  "Welcome to the experience. Click a button below."
+];
 
-  
-    let currentSentence = 0;
-    let index = 0;
-    let interval;
-    let currentColor = 'black';
-    const buttonsDiv = document.getElementById('buttons');
-    const textDiv = document.getElementById("text");
-    const typeSound = document.getElementById("typeSound");
-    const lightDark = document.getElementById("ld_mode");
 
-    function changeBackgroundToBlack(){
-      if (currentColor === 'white') {
-        document.body.style.backgroundColor = 'black';
-        currentColor = 'black';
-      } else{
-        document.body.style.backgroundColor = 'white';
-        currentColor = 'white';
-      }
-    }
+const experienceSentences = {
+  "button1": "",
+  "button2": "Who am I? Well im happy you asked because i..i..im not sure, all i know is that im stuck in this void answering questions my creator wants me to, but i have a name, however its REDACTED, sorry.",
+  "ld_mode": ""
+};
+const siteStartTime = Date.now();
+let currentSentence = 0;
+let index = 0;
+let interval;
+let isTyping = false;
+let isIntro = true;
 
-    function typeSentence() {
-      if (index < sentences[currentSentence].length) {
-        textDiv.textContent += sentences[currentSentence][index];
-        
-        // Restart and play the typing sound
-        typeSound.currentTime = 0;
-        typeSound.play();
+const textDiv = document.getElementById("text");
+const buttonsDiv = document.getElementById("buttons");
+const typeSound = document.getElementById("typeSound");
+const ambiance = document.getElementById("bg-ambi");
 
-        index++;
-      } else {
-        clearInterval(interval);
-      }
-    }
-    function nextSentence() {
+// Typing function
+function typeSentence(sentence) {
+  isTyping = true;
+  textDiv.textContent = "";
+  index = 0;
+
+  clearInterval(interval);
+  interval = setInterval(() => {
+    if (index < sentence.length) {
+      textDiv.textContent += sentence[index];
+      typeSound.currentTime = 0;
+      typeSound.play();
+      index++;
+    } else {
       clearInterval(interval);
-      textDiv.textContent = "";
-      index = 0;
-      currentSentence = (currentSentence + 1) % sentences.length;
-      interval = setInterval(typeSentence, 50);
-       if (currentSentence === 11) {
-          buttonsDiv.style.display = "block"; // Show buttons after 11 sentences
-        }
+      isTyping = false;
     }
+  }, 50);
+}
 
+// Intro advance logic
+function nextSentence() {
+  if (isTyping || !isIntro) return;
 
+  currentSentence++;
+  if (currentSentence < introSentences.length) {
+    typeSentence(introSentences[currentSentence]);
+  } else {
+    isIntro = false;
+    buttonsDiv.style.display = "flex";
+    textDiv.textContent = "Choose an option below to continue.";
+  }
+}
 
-    // Start the first sentence
-    interval = setInterval(typeSentence, 50);
- 
-window.addEventListener('DOMContentLoaded', () => {
-    const ambiance = document.getElementById('bg-ambi');
+// Button trigger for experience mode
+function handleButtonClick(id) {
+  if (id === "ld_mode") return; // handled separately
 
-    // Wait for user interaction to play music
-    document.body.addEventListener('click', () => {
-      ambiance.play();
-    }, { once: true }); // Only triggers on the first click
+  if (id === "button1") {
+    const timeSpent = Math.floor((Date.now() - siteStartTime) / 1000); // in seconds
+    const minutes = Math.floor(timeSpent / 60);
+    const seconds = timeSpent % 60;
+    const time = `You've been here for ${minutes} minutes and ${seconds} seconds, what cant read a clock? Wait... i forgot to add one`;
+    typeSentence(time);
+    return;
+  }
+
+  const sentence = experienceSentences[id] || "Unknown action.";
+  typeSentence(sentence);
+}
+
+document.getElementById("ld_mode").addEventListener("click", () => {
+  const body = document.body;
+  const isLightNow = body.classList.toggle("light-mode");
+
+  if (isLightNow) {
+    typeSentence("AHHHHHHHHHH WHO TURNED THE LIGHTS ON IVE BEEN FLASHBANGED");
+  } else {
+    typeSentence("ah thank god you finally turned the lights back off");
+  }
+});
+window.addEventListener("DOMContentLoaded", () => {
+  // Start typing the first intro sentence
+  typeSentence(introSentences[0]);
+
+  // Background audio on first click
+  document.body.addEventListener('click', () => {
+    ambiance.play().catch(() => {});
+  }, { once: true });
+
+  // Clicking anywhere to proceed intro
+  document.body.addEventListener('click', nextSentence);
+
+  // Hook up other buttons
+  document.querySelectorAll("#buttons button").forEach(button => {
+    button.addEventListener("click", (e) => {
+      e.stopPropagation(); // Don't trigger page click
+      handleButtonClick(button.id);
+    });
   });
-
-///      "This section of this project will be a message for those who have helped me thoughout the year",
-///   "Whether it be my classmates or Mr Coop",
-//    "Each and everyone have helped me turn what seemed to be an impossible and complicated task...",
-//   "That was turned into a activity that i seemed to enjoy",
-//    "I want to thank everyone for helping me",
-//     "And coop, you were honestly the goat, im sad that ur leaving tuckahoe im sure we all are",
-//    "But enough of my talk lets get into the activity at hand",
-//      "its not really a WEBSITE or GAME its more like a quick EXPERIENCE, something where i can do whatever",
-//      "-------------------------------------------------------------------------------------------------------",
+});
