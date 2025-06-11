@@ -25,7 +25,7 @@ body.dark-mode {
 
 
 
-button:hover {
+#button:hover {
   background-color: grey;
   color: black;
 }
@@ -46,7 +46,8 @@ button:hover {
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
+  display: none;
   gap: 10px; /* spacing between buttons */
   z-index: 1000;
 }
+

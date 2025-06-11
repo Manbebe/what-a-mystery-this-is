@@ -15,8 +15,10 @@ const introSentences = [
 
 const experienceSentences = {
   "button1": "",
-  "button2": "Who am I? Well im happy you asked because i..i..im not sure, all i know is that im stuck in this void answering questions my creator wants me to, but i have a name, however its REDACTED, sorry.",
-  "ld_mode": ""
+  "button2": "Who am I? Well im happy you asked because im not sure, all i know is that im stuck in this void answering questions my creator wants me to, but i have a name, however its REDACTED, sorry.",
+  "ld_mode": "",
+  "button3": "Well try to observe your surroundings you see anything? Didnt think so, we are in the void right now",
+  "button4": "Who are you? how do you not know yourself, but i guess its different here. You are a player and your origin is that you ended up here after my creator wanted to hold you here for...safe keeping."
 };
 const siteStartTime = Date.now();
 let currentSentence = 0;
@@ -61,6 +63,9 @@ function nextSentence() {
     isIntro = false;
     buttonsDiv.style.display = "flex";
     textDiv.textContent = "Choose an option below to continue.";
+  }
+  if(currentSentence >= 10){
+    buttonsDiv.style.display = "block";
   }
 }
 
