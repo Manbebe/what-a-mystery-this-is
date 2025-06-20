@@ -2,7 +2,6 @@ const introSentences = [
   "Click text to proceed to next sentence",
   "Hello...",
   "Welcome to my final project",
-  "I think it’s pretty obvious I used a bit of AI, but that’s beside the point.",
   "This website focuses on being an interactable little thing...",
   "So please enjoy this :)",
   "The buttons will now appear in 3",
@@ -64,7 +63,7 @@ function nextSentence() {
     buttonsDiv.style.display = "flex";
     textDiv.textContent = "Choose an option below to continue.";
   }
-  if(currentSentence >= 10){
+  if(currentSentence >= 9){
     buttonsDiv.style.display = "block";
   }
 }
